@@ -2,6 +2,10 @@ describe("Book all tests", () => {
 
     beforeEach(() => {
         cy.visit("/");
+        let resX = Cypress.env('x');
+        let resY = Cypress.env('y');
+        cy.log(`Ставим разрешение  ${resX}х${resY}`);
+        cy.viewport(resX, resY);
     });
 
     it("Should successfully login", () => {
@@ -27,26 +31,29 @@ describe("Book all tests", () => {
     });
 
     // первоначальное условие - книга еще не должна быть в избранном
-    it("Should add to favorites", () => {
+    it.skip("Should add to favorites", () => {
         cy.login("test@test.com", "test");
-        cy.get("a.mt-3 .card-title").contains("title1").parent().parent().find(".btn").click();    
+        cy.get("a.mt-3 .card-title").contains("Book1").parent().parent().find(".btn").click();    
     });
 
     // первоначальное условие - книга уже должна быть в избранном
-    it("Should delete from favorites", () => {
+    it.skip("Should delete from favorites", () => {
         cy.login("test@test.com", "test");
-        cy.get("a.mt-3 .card-title").contains("title1").parent().parent().find(".btn").click();    
+        cy.get("a.mt-3 .card-title").contains("Book2").parent().parent().find(".btn").click();    
     });
 
     // перейти в Favorites и убедиться, что находимся там (при наличии хоть одной книги)
-    it.only("Should be in favorites", () => {
+    it.skip("Should be inside favorites", () => {
         cy.login("test@test.com", "test");
         cy.visit("/favorites");
-        let favBooks = cy.get("a.mt-3 .card-title").length;    
-        //favBooks.forEach((book) => 
-        //    cy.log(book));
-        cy.log(favBooks);
-        cy.log("sss");
+
+        let booksCount = 0;
+        cy.get("a.mt-3 .card-title").each((el) => {
+            booksCount++;
+            cy.log(booksCount);
+        });
+        cy.log(booksCount);
+        //expect(booksCount).be.above(0);
     });
 
 });

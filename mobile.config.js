@@ -8,10 +8,10 @@ module.exports = defineConfig({
     baseUrl: "http://localhost:3000",
     "retries": 0,
   },
-  // разрешение по умолчанию
+  // разрешение для смартфона (HD)
   env: {
-    "x": 1280,
-    "y": 720,
+    "x": 720,
+    "y": 1280,
   },
  
 });
