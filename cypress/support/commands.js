@@ -34,3 +34,14 @@ Cypress.Commands.add('login', (email, password) => {
     }
     cy.contains('Submit').click();
 });
+
+Cypress.Commands.add('addInFavorites', (title, desc, authors) => {
+    if ((title) || (desc) || (authors)) {
+        cy.get(".btn").contains("Add new").click();
+        cy.get("input#title").type(title);
+        cy.get("input#description").type(desc);
+        cy.get("input#authors").type(authors);
+        cy.get("input#favorite").click();
+        cy.contains("Submit").click();
+    };
+});
