@@ -9,12 +9,12 @@ describe("Favorites tests", () => {
     });
 
     // первоначальное условие - книга еще не должна быть в избранном
-    it.only("Should add to favorites", () => {
+    it.skip("Should add to favorites", () => {
         cy.login("test@test.com", "test");
         const title = "Super Book";
         const desc = "Super Description";
         const authors = "Super Man";
-        // добавить книгу в избранное
+        // создать и добавить книгу в избранное
         cy.addInFavorites(title, desc, authors);
         // перейти в раздел Избранное
         cy.get("h4").contains("Favorites").click(); 
@@ -22,10 +22,17 @@ describe("Favorites tests", () => {
         cy.get("div.card-title").contains(title);   
     });
 
-    // первоначальное условие - книга уже должна быть в избранном
     it.skip("Should delete from favorites", () => {
         cy.login("test@test.com", "test");
-        cy.get("a.mt-3 .card-title").contains("Book2").parent().parent().find(".btn").click();    
+        const title = "Super Book";
+        const desc = "Super Description";
+        const authors = "Super Man";
+        // перейти в раздел Избранное
+        cy.get("h4").contains("Favorites").click(); 
+        // находим и удаляем книгу из избранного
+        cy.get("a.mt-3 .card-title").contains(title).parent().parent().contains("Delete from favorite").click();
+        // проверяем, что ее там нет
+        cy.get("a.mt-3 .card-title").contains(title).should('not.exist');
     });
 
     // перейти в Favorites и убедиться, что находимся там (при наличии хоть одной книги)
